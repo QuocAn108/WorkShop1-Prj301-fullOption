@@ -48,6 +48,10 @@
         <servlet-name>RemoveProductLoveController</servlet-name>
         <servlet-class>Controller.RemoveProductLoveController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangeController</servlet-name>
+        <servlet-class>Controller.ChangeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/mainController</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>RemoveProductLoveController</servlet-name>
         <url-pattern>/removeProductLoveController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeController</servlet-name>
+        <url-pattern>/changeController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

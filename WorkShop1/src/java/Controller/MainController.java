@@ -46,6 +46,8 @@ public class MainController extends HttpServlet {
     private static final String Add_to_cart_CONTROLLER = "addMobileToCartController";
     private static final String REMOVE = "RemoveProduct";
     private static final String REMOVE_CONTROLLER = "removeProductByUserController";
+    private static final String CHANGE = "ChangeProduct";
+    private static final String CHANGE_CONTROLLER = "changeController";
     private static final String REMOVE1 = "RemoveProductLove";
     private static final String REMOVE1_CONTROLLER = "removeProductLoveController";
     private static final String ViewCart = "ViewCart";
@@ -91,8 +93,10 @@ public class MainController extends HttpServlet {
                 url = Add_to_love_cart_CONTROLLER;
             } else if (ViewLoveCart.equals(action)) {
                 url = ViewLoveCart_CONTROLLER;
-            }else if(REMOVE1.equals(action)){
+            } else if (REMOVE1.equals(action)) {
                 url = REMOVE1_CONTROLLER;
+            }else if(CHANGE.equals(action)){
+                url=CHANGE_CONTROLLER;
             }
             else {
                 request.setAttribute("ERROR", "Your action not support");

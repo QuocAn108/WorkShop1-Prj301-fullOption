@@ -1,12 +1,11 @@
+package Controller;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
-
 import Product.CartDTO;
-import Product.ProductDAO;
 import Product.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author lienm
  */
-public class AddMobileToLoveListController extends HttpServlet {
+public class ChangeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,41 +30,32 @@ public class AddMobileToLoveListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   private static final String ERROR = "user.jsp";
-    private static final String SUCCESS = "user.jsp";
+    private static final String ERROR = "userCart.jsp";
+    private static final String SUCCESS = "userCart.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        ProductDAO dao = new ProductDAO();
         try {
             String mobileID = request.getParameter("mobileID");
-            String Description = request.getParameter("Description");
-            String PriceSTR = request.getParameter("Price");
-            String mobileName = request.getParameter("mobileName");
-            String yearOfProductionSTR = request.getParameter("yearOfProduction");
-            String notSaleSTR = request.getParameter("notSale");
-            String QuantitySTR = request.getParameter("Quantity");
-            int Quantity=Integer.parseInt(QuantitySTR);
-            float Price = Float.parseFloat(PriceSTR);
-            int yearOfProduction = Integer.parseInt(yearOfProductionSTR);
-            int notSale = Integer.parseInt(notSaleSTR);
+            int newQuantity = Integer.parseInt(request.getParameter("Quantity"));
             HttpSession session = request.getSession();
-            CartDTO cart = (CartDTO) session.getAttribute("LOVECART");
-            if (cart == null) {
-                cart = new CartDTO();
-            }
-            boolean check,check1,check2=true;
-                 check= dao.checkDuplicate1(mobileID);
-            if(check){
-                 check1=dao.delete1(mobileID);
-            } else {
-                check2=dao.insertLIST(new ProductDTO(mobileID, Description, Price, mobileName, yearOfProduction, Quantity, notSale));
-            }
-            if (check2) {
-                session.setAttribute("LOVECART", cart);
-                url = SUCCESS;
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
+            if (cart != null) {
+                if (cart.getCart().containsKey(mobileID)) {
+                    float Price = cart.getCart().get(mobileID).getPrice();
+                    String Description = cart.getCart().get(mobileID).getDescription();
+                    String moblieName = cart.getCart().get(mobileID).getMobileName();
+                    int yearOfProduction = cart.getCart().get(mobileID).getYearOfProduction();
+                    int notSale = cart.getCart().get(mobileID).getNotSale();
+                    ProductDTO product = new ProductDTO(mobileID, Description, Price, moblieName, yearOfProduction, newQuantity, notSale);
+                    boolean check = cart.change(mobileID, product);
+                    if (check) {
+                        session.setAttribute("CART", cart);
+                        url = SUCCESS;
+                    }
+                }
             }
         } catch (Exception e) {
             log("Error at AddToCartController: " + e.toString());

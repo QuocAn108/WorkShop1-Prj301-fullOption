@@ -51,12 +51,12 @@ public class CartDTO {
         return check;
     }
 
-    public boolean change(String SKU, ProductDTO product) {
+    public boolean change(String mobileID, ProductDTO product) {
         boolean check = false;
         try {
             if (this.cart != null) {
-                if (this.cart.containsKey(SKU)) {
-                    this.cart.replace(SKU, product);
+                if (this.cart.containsKey(mobileID)) {
+                    this.cart.replace(mobileID, product);
                     check = true;
                 }
             }

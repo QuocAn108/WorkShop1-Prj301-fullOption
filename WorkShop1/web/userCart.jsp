@@ -161,6 +161,9 @@
                         <td>
                             <input type="submit" name="action" value="RemoveProduct" />
                         </td>
+                         <td>
+                            <input type="submit" name="action" value="ChangeProduct" />
+                        </td>
                     </tr>
                 </form>
 
